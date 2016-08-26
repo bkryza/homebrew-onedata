@@ -27,7 +27,7 @@ class Oneclient < Formula
   end 
 
   def install
-    system 'cmake -G "Unix Makefiles"'
+    system "cmake", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "."
     system "make"
     system "make", "install"
   end
