@@ -1,7 +1,7 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "onedata.org"
-  #url "https://example.com/foo-0.1.tar.gz"
+  url "ssh://git@git.plgrid.pl:7999/vfs/oneclient.git"
   #sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 
   depends_on "cmake" => :build
@@ -11,11 +11,11 @@ class Oneclient < Formula
   depends_on "protobuf"
   depends_on "tbb"
   depends_on "ninja"
-  depends_on "bkryza/homebrew-onedata/AWS_SDK_CPP"
+  depends_on "bkryza/homebrew-onedata/swift-cpp-sdk"
 
   def install
-    system "./configure", "--prefix=#{prefix}", "--disable-debug", "--disable-dependency-tracking"
-    # system "cmake", ".", *std_cmake_args
+    system 'cmake -G "Unix Makefiles"'
+    system "make"
     system "make", "install"
   end
 end
