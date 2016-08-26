@@ -14,7 +14,7 @@ class Oneclient < Formula
   depends_on "ninja"
   depends_on "Caskroom/versions/osxfuse-beta"
   depends_on "aws-sdk-cpp"
-  depends_on "bkryza/onedata/swift-cpp-sdk", :branch => "feature/osx-port"
+  depends_on "bkryza/onedata/swift-cpp-sdk"
 
   def install
     system 'cmake -G "Unix Makefiles"'
