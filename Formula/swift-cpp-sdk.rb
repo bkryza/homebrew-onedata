@@ -5,6 +5,6 @@ class SwiftCppSdk < Formula
 
   def install
     system "make"
-    system "make", "install"
+    system "make", "install", "DESTDIR=#{prefix}"
   end
 end
