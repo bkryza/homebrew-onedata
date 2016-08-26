@@ -12,9 +12,19 @@ class Oneclient < Formula
   depends_on "protobuf"
   depends_on "tbb"
   depends_on "ninja"
-  depends_on_formula "osxfuse-beta"
+  #depends_on "osxfuse-beta"
   depends_on "aws-sdk-cpp"
   depends_on "bkryza/onedata/swift-cpp-sdk"
+
+  def caveats
+    <<-EOS.undent
+      This package requires OSXFuse version >=3.4.2.
+
+      Install manually from https://osxfuse.github.io/ or using
+
+      brew install Caskroom/versions/osxfuse-beta
+    EOS
+  end 
 
   def install
     system 'cmake -G "Unix Makefiles"'
