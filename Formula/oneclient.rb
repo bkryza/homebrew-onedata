@@ -1,7 +1,7 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
-  homepage "onedata.org"
-  url "ssh://git@git.plgrid.pl:7999/vfs/oneclient.git"
+  homepage "https://onedata.org"
+  url "ssh://git@git.plgrid.pl:7999/vfs/oneclient.git", :branch => "feature/osxfuse-port"
   version "3.0.0-RC3"
   #sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 
@@ -12,7 +12,9 @@ class Oneclient < Formula
   depends_on "protobuf"
   depends_on "tbb"
   depends_on "ninja"
-  depends_on "bkryza/homebrew-onedata/swift-cpp-sdk"
+  depends_on "Caskroom/versions/osxfuse-beta"
+  depends_on "aws-sdk-cpp"
+  depends_on "bkryza/onedata/swift-cpp-sdk", :branch => "feature/osx-port"
 
   def install
     system 'cmake -G "Unix Makefiles"'
