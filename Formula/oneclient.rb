@@ -12,7 +12,7 @@ class Oneclient < Formula
   depends_on "protobuf"
   depends_on "tbb"
   depends_on "ninja"
-  depends_on cask: => "osxfuse-beta"
+  depends_on :cask => "osxfuse-beta"
   depends_on "aws-sdk-cpp"
   depends_on "bkryza/onedata/swift-cpp-sdk"
 
