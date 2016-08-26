@@ -2,6 +2,7 @@ class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "onedata.org"
   url "ssh://git@git.plgrid.pl:7999/vfs/oneclient.git"
+  version "3.0.0-RC3"
   #sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 
   depends_on "cmake" => :build
