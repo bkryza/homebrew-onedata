@@ -1,7 +1,7 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  url "git@git.plgrid.pl:7999/vfs/oneclient.git", :branch => "feature/osxfuse-port"
+  url "https://github.com/bkryza/oneclient.git", :branch => "feature/osxfuse-port"
   version "3.0.0-RC3"
   #sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 
