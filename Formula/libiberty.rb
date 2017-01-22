@@ -6,7 +6,7 @@ class Libiberty < Formula
 
   def install
     Dir.chdir('libiberty')
-    system "./configure", "--prefix=#{prefix}"
+    system "./configure", "--prefix=#{prefix}", "--enable-install-libiberty"
     system "make"
     system "make", "install"
   end
