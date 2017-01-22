@@ -5,7 +5,7 @@ class Libiberty < Formula
   sha256 "26253bf0f360ceeba1d9ab6965c57c6a48a01a8343382130d1ed47c468a3094f"
 
   def install
-    system "cd", "libiberty"
+    Dir.chdir('libiberty')
     system "./configure", "--prefix=#{prefix}"
     system "make"
     system "make", "install"
