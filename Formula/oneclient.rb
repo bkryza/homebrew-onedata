@@ -36,7 +36,7 @@ class Oneclient < Formula
   end 
 
   def install
-    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", "WITH_S3=OFF", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF", "OPENSSL_ROOT_DIR=/usr/local/opt/openssl", "OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib"
+    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", "WITH_S3=OFF", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
     system "DESTDIR=#{prefix}", "make", "install"
   end
 end
