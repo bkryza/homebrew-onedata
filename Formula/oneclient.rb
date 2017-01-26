@@ -1,8 +1,8 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  url "https://github.com/bkryza/oneclient.git", :branch => "feature/osxfuse-port"
-  version "3.0.0-RC3"
+  url "https://github.com/onedata/oneclient.git", :branch => "develop-osx"
+  version "3.0.0-RC12"
   #sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 
   depends_on "cmake" => :build
@@ -11,25 +11,32 @@ class Oneclient < Formula
   depends_on "go"
   depends_on "protobuf"
   depends_on "tbb"
-  depends_on "ninja"
+  depends_on "ninja" => :build
   depends_on "poco"
-  #depends_on "osxfuse-beta"
+  depends_on "osxfuse"
   depends_on "aws-sdk-cpp"
+  depends_on "double-conversion"
+  depends_on "glog"
+  depends_on "folly"
+  depends_on "nss"
+  depends_on "openssl"
+  depends_on "libevent"
+  depends_on "nspr"
   depends_on "bkryza/onedata/swift-cpp-sdk"
+  depends_on "bkryza/onedata/libiberty"
 
   def caveats
     <<-EOS.undent
-      This package requires OSXFuse version >=3.4.2.
+      This package requires OSXFuse version >=3.5.4.
 
       Install manually from https://osxfuse.github.io/ or using
 
-      brew install Caskroom/versions/osxfuse-beta
+      brew install Caskroom/versions/osxfuse
     EOS
   end 
 
   def install
-    system "cmake", "-DCMAKE_INSTALL_PREFIX=#{prefix}", "."
-    system "make"
-    system "make", "install"
+    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", "WITH_S3=OFF", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF", "OPENSSL_ROOT_DIR=/usr/local/opt/openssl", "OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib"
+    system "DESTDIR=#{prefix}", "make", "install"
   end
 end
