@@ -28,6 +28,14 @@ class Oneclient < Formula
     system "#{bin}/oneclient --version | grep Oneclient"
   end
 
+  def install
+    ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
+    ENV["DESTDIR"]=@prefix.to_s
+    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", \
+           "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
+    system "make", "install"
+  end
+
   def caveats
     <<-EOS.undent
       This package requires OSXFuse version >=3.5.4.
@@ -38,11 +46,4 @@ class Oneclient < Formula
     EOS
   end
 
-  def install
-    ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
-    ENV["DESTDIR"]=@prefix.to_s
-    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", \
-           "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
-    system "make", "install"
-  end
 end
