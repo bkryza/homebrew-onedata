@@ -25,7 +25,7 @@ class Oneclient < Formula
   depends_on "bkryza/onedata/libiberty"
 
   test do
-    system "oneclient --version | grep Oneclient"
+    system "#{bin}/oneclient --version | grep Oneclient"
   end
 
   def caveats
@@ -36,11 +36,11 @@ class Oneclient < Formula
 
       brew install Caskroom/cask/osxfuse
     EOS
-  end 
+  end
 
   def install
     ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
-    ENV["DESTDIR"]="#{prefix}"
+    ENV["DESTDIR"]=@prefix.to_s
     system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", \
            "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
     system "make", "install"
