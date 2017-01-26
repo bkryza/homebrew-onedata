@@ -38,7 +38,7 @@ class Oneclient < Formula
   def install
     system "export PKG_CONFIG_PATH=/usr/local/opt/nss/lib/pkgconfig && "\
            "make release WITH_COVERAGE=OFF WITH_CEPH=OFF WITH_S3=OFF "\
-           "WITH_SWIFT=OFF WITH_OPENSSL=ON"
+           "WITH_SWIFT=OFF WITH_OPENSSL=OFF"
     system "DESTDIR=#{prefix}", "make", "install"
   end
 end
