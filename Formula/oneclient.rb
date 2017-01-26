@@ -3,7 +3,6 @@ class Oneclient < Formula
   homepage "https://onedata.org"
   url "https://github.com/onedata/oneclient.git", :branch => "develop-osx"
   version "3.0.0-RC12"
-  #sha256 "85cc828a96735bdafcf29eb6291ca91bac846579bcef7308536e0c875d6c81d7"
 
   depends_on "cmake" => :build
   depends_on "boost"
@@ -14,7 +13,6 @@ class Oneclient < Formula
   depends_on "ninja" => :build
   depends_on "poco"
   depends_on :osxfuse
-  depends_on "aws-sdk-cpp"
   depends_on "double-conversion"
   depends_on "glog"
   depends_on "folly"
@@ -22,8 +20,13 @@ class Oneclient < Formula
   depends_on "openssl"
   depends_on "libevent"
   depends_on "nspr"
-  depends_on "bkryza/onedata/swift-cpp-sdk"
+  depends_on "aws-sdk-cpp" => :optional
+  depends_on "bkryza/onedata/swift-cpp-sdk" => :optional
   depends_on "bkryza/onedata/libiberty"
+
+  test do
+    system "oneclient --version | grep Oneclient"
+  end
 
   def caveats
     <<-EOS.undent
@@ -31,14 +34,14 @@ class Oneclient < Formula
 
       Install manually from https://osxfuse.github.io/ or using
 
-      brew install Caskroom/versions/osxfuse
+      brew install Caskroom/cask/osxfuse
     EOS
   end 
 
   def install
-    system "export PKG_CONFIG_PATH=/usr/local/opt/nss/lib/pkgconfig && "\
-           "make release WITH_COVERAGE=OFF WITH_CEPH=OFF WITH_S3=OFF "\
-           "WITH_SWIFT=OFF WITH_OPENSSL=OFF"
+    ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
+    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", 
+           "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF",
     system "DESTDIR=#{prefix}", "make", "install"
   end
 end
