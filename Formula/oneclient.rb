@@ -24,9 +24,6 @@ class Oneclient < Formula
   depends_on "bkryza/onedata/swift-cpp-sdk" => :optional
   depends_on "bkryza/onedata/libiberty"
 
-  test do
-    system "#{bin}/oneclient --version | grep Oneclient"
-  end
 
   def install
     ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
@@ -34,6 +31,10 @@ class Oneclient < Formula
     system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", \
            "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
     system "make", "install"
+  end
+
+  test do
+    system "#{bin}/oneclient --version | grep Oneclient"
   end
 
   def caveats
