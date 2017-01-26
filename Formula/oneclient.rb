@@ -13,7 +13,7 @@ class Oneclient < Formula
   depends_on "tbb"
   depends_on "ninja" => :build
   depends_on "poco"
-  depends_on "osxfuse"
+  #depends_on "osxfuse"
   depends_on "aws-sdk-cpp"
   depends_on "double-conversion"
   depends_on "glog"
