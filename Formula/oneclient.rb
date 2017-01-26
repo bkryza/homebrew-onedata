@@ -41,7 +41,7 @@ class Oneclient < Formula
   def install
     ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
     ENV["DESTDIR"]="#{prefix}"
-    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", 
+    system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", \
            "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
     system "make", "install"
   end
