@@ -4,6 +4,7 @@ class Oneclient < Formula
   url "https://github.com/onedata/oneclient.git", :branch => "develop-osx"
   version "3.0.0-RC12"
 
+  depends_on :osxfuse
   depends_on "cmake" => :build
   depends_on "boost"
   depends_on "libsodium"
@@ -12,7 +13,6 @@ class Oneclient < Formula
   depends_on "tbb"
   depends_on "ninja" => :build
   depends_on "poco"
-  depends_on :osxfuse
   depends_on "double-conversion"
   depends_on "glog"
   depends_on "folly"
@@ -28,17 +28,19 @@ class Oneclient < Formula
     ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
     ENV["DESTDIR"]=@prefix.to_s
     system "make", "release", "WITH_COVERAGE=OFF", "WITH_CEPH=OFF", \
-           "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=OFF"
+           "WITH_S3=OFF ", "WITH_SWIFT=OFF", "WITH_OPENSSL=ON", \
+           "OPENSSL_ROOT_DIR=/usr/local/opt/openssl", \
+           "OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib"
     system "make", "install"
   end
 
   def caveats
     <<-EOS.undent
-      This package requires OSXFuse version >=3.5.4.
+      This package requires OSXFuse version >= 3.5.4.
 
       Install manually from https://osxfuse.github.io/ or using
 
-      brew install Caskroom/cask/osxfuse
+      brew cask install osxfuse
     EOS
   end
 
