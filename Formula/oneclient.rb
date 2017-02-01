@@ -10,8 +10,8 @@ class Oneclient < Formula
   depends_on :osxfuse
   depends_on "cmake" => :build
   depends_on "ninja" => :build
-  depends_on "boost"
-  depends_on "boost-python" => [:build, "with-python3"]
+  depends_on "boost" => "c++11"
+  depends_on "boost-python" => [:build, "with-python3", "c++11"]
   depends_on "go" => :build
   depends_on "libsodium"
   depends_on "protobuf"
@@ -66,7 +66,7 @@ class Oneclient < Formula
   def caveats
     <<-EOS.undent
 
-      This is an experimental version of Onedata `oneclient` command line tool.
+      This is an experimental version of Onedata `oneclient` command line tool for macOS.
 
       To mount your Onedata spaces add the following mount options on the
       command line:
@@ -76,7 +76,6 @@ class Oneclient < Formula
       For more information on `oneclient` usage check:
 
         man oneclient
-
     EOS
   end
 
