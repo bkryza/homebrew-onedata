@@ -47,7 +47,6 @@ class Oneclient < Formula
       WITH_OPENSSL=ON
       OPENSSL_ROOT_DIR=/usr/local/opt/openssl
       OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
-      DESTDIR=@prefix.to_s
     ]
 
     # Make release version
