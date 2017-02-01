@@ -2,7 +2,9 @@ class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
   url "https://github.com/onedata/oneclient.git", :revision => "217d0cbb213b5aee4f1c8723d74c7395da8caaa4"
-  version "3.0.0-rc12-217d0cb"
+  version "3.0.0-rc11-217d0cb"
+
+  depends_on :macos => :sierra
 
   depends_on :osxfuse
   depends_on "cmake" => :build
@@ -25,14 +27,14 @@ class Oneclient < Formula
   depends_on "bkryza/onedata/swift-cpp-sdk" => :optional
   depends_on "onedata/onedata/libiberty"
 
-  devel do
-    url "https://github.com/onedata/oneclient.git", :branch => "develop"
-  end
+  # devel do
+  #   url "https://github.com/onedata/oneclient.git", :branch => "develop"
+  # end
 
-#  bottle do
-#    url ""
-#    sha256 "47ae0e479cdb15bea6820f7f2d659d45e9d7a09a97a2d7f44c02b6c7a689dd9f" => :sierra
-#  end
+ # bottle do
+ #   url ""
+ #   sha256 "47ae0e479cdb15bea6820f7f2d659d45e9d7a09a97a2d7f44c02b6c7a689dd9f" => :sierra
+ # end
 
   def install
     # Setup environment variables for the build
@@ -40,15 +42,15 @@ class Oneclient < Formula
     ENV["DESTDIR"]=@prefix.to_s
 
     # Setup make arguments
-    args = %W[
-      "release"
-      "WITH_COVERAGE=OFF"
-      "WITH_CEPH=OFF"
-      "WITH_S3=OFF"
-      "WITH_SWIFT=OFF"
-      "WITH_OPENSSL=ON"
-      "OPENSSL_ROOT_DIR=/usr/local/opt/openssl"
-      "OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib"
+    args = %w[
+      release
+      WITH_COVERAGE=OFF
+      WITH_CEPH=OFF
+      WITH_S3=OFF
+      WITH_SWIFT=OFF
+      WITH_OPENSSL=ON
+      OPENSSL_ROOT_DIR=/usr/local/opt/openssl
+      OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
     ]
 
     # Make release version
