@@ -30,7 +30,7 @@ class Oneclient < Formula
 
  # bottle do
  #   url ""
- #   sha256 "4278e2c85f67f23519359628318bc8bd095ac303be17f9b2a603cd79a2917266" => :sierra
+ #   sha256 "" => :sierra
  # end
 
   def install
