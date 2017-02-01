@@ -25,7 +25,7 @@ class Oneclient < Formula
   depends_on "libevent"
   depends_on "nspr"
   depends_on "aws-sdk-cpp" => :optional
-  depends_on "bkryza/onedata/swift-cpp-sdk" => :optional
+  depends_on "onedata/onedata/swift-cpp-sdk" => :optional
   depends_on "onedata/onedata/libiberty"
 
  # bottle do
