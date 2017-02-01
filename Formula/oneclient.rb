@@ -26,7 +26,7 @@ class Oneclient < Formula
   depends_on "onedata/onedata/libiberty"
 
   devel do
-    head "https://github.com/onedata/oneclient.git", :branch => "develop"
+    url "https://github.com/onedata/oneclient.git", :branch => "develop"
   end
 
 #  bottle do
