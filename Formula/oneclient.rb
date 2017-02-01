@@ -58,8 +58,7 @@ class Oneclient < Formula
     system "make", "install"
 
     # Setup autocompletion scripts
-    bash_completion.install "var/lib/oneclient/oneclient.bash-completion"
-                            => "oneclient"
+    bash_completion.install "var/lib/oneclient/oneclient.bash-completion" => "oneclient"
     zsh_completion.install "var/lib/oneclient/_oneclient"
   end
 
