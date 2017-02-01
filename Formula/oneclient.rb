@@ -1,7 +1,7 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  head "https://github.com/onedata/oneclient.git", :revision => "217d0cbb213b5aee4f1c8723d74c7395da8caaa4"
+  url "https://github.com/onedata/oneclient.git", :revision => "217d0cbb213b5aee4f1c8723d74c7395da8caaa4"
   version "3.0.0-rc12-217d0cb"
 
   depends_on :osxfuse
