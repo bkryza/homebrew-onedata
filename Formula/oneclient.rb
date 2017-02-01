@@ -2,7 +2,8 @@ class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
   url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "217d0cbb213b5aee4f1c8723d74c7395da8caaa4"
-  version "3.0.0-rc11-217d0cb"
+  version "3.0.0-rc11-76-g217d0cb"
+  head "https://github.com/onedata/oneclient.git", :branch => "develop"
 
   depends_on :macos => :sierra
 
@@ -27,19 +28,14 @@ class Oneclient < Formula
   depends_on "bkryza/onedata/swift-cpp-sdk" => :optional
   depends_on "onedata/onedata/libiberty"
 
-  # devel do
-  #   url "https://github.com/onedata/oneclient.git", :branch => "develop"
-  # end
-
  # bottle do
  #   url ""
- #   sha256 "47ae0e479cdb15bea6820f7f2d659d45e9d7a09a97a2d7f44c02b6c7a689dd9f" => :sierra
+ #   sha256 "4278e2c85f67f23519359628318bc8bd095ac303be17f9b2a603cd79a2917266" => :sierra
  # end
 
   def install
     # Setup environment variables for the build
-    ENV["PKG_CONFIG_PATH"]="/usr/local/opt/nss/lib/pkgconfig"
-    ENV["DESTDIR"]=@prefix.to_s
+    ENV["PKG_CONFIG_PATH"]="#{HOMEBREW_PREFIX}/opt/nss/lib/pkgconfig"
 
     # Setup make arguments
     args = %w[
@@ -51,26 +47,37 @@ class Oneclient < Formula
       WITH_OPENSSL=ON
       OPENSSL_ROOT_DIR=/usr/local/opt/openssl
       OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
+      DESTDIR=@prefix.to_s
     ]
 
     # Make release version
     system "make", *args
 
     # Install all files into the default Cellar
-    system "make", "install"
-
-    # Setup autocompletion scripts
-    bash_completion.install "var/lib/oneclient/oneclient.bash-completion" => "oneclient"
-    zsh_completion.install "var/lib/oneclient/_oneclient"
+    bin.install "release/oneclient"
+    etc.install "config/oneclient.conf"
+    man1.install "man/oneclient.1"
+    man5.install "man/oneclient.conf.5"
+    doc.install "LICENSE.txt"
+    doc.install "README.md"
+    bash_completion.install "autocomplete/osx/oneclient.bash-completion" => "oneclient"
+    zsh_completion.install "autocomplete/osx/_oneclient"
   end
 
   def caveats
     <<-EOS.undent
-      This package requires OSXFuse version >= 3.5.4.
 
-      Install manually from https://osxfuse.github.io/ or using
+      This is an experimental version of Onedata `oneclient` command line tool.
 
-      brew cask install osxfuse
+      To mount your Onedata spaces add the following mount options on the
+      command line:
+
+        oneclient -o allow_other,defer_permissions,fsname=oneclient,volname=Oneclient,kill_on_unmount,noappledouble,noapplexattr ...
+
+      For more information on `oneclient` usage check:
+
+        man oneclient
+
     EOS
   end
 
