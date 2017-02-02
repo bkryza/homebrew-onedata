@@ -8,7 +8,7 @@ class Oneclient < Formula
   bottle do
     root_url "https://github.com/onedata/oneclient/archive"
     cellar :any
-    sha256 "efbe16aa2003441a4e8cdb79e037c292a3ddc0a65328210c2216cbfb72982148" => :sierra
+    sha256 "" => :sierra
   end
 
   depends_on :macos => :sierra
