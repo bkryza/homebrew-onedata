@@ -16,8 +16,8 @@ class Oneclient < Formula
   depends_on :osxfuse
   depends_on "cmake" => :build
   depends_on "ninja" => :build
-  depends_on "boost" => "c++11"
-  depends_on "boost-python" => [:build, "with-python3", "c++11"]
+  depends_on "boost"
+  depends_on "boost-python" => [:build, "with-python3"]
   depends_on "go" => :build
   depends_on "libsodium"
   depends_on "protobuf"
