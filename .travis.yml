@@ -1,0 +1,32 @@
+branches:
+  only:
+  - release/master
+
+language: cpp
+
+matrix:
+  include:
+  - os: osx
+    osx_image: xcode8.2
+    compiler: clang
+    env: ONEDATA_GIT_URL="https://github.com/onedata" OSX_CODENAME=sierra
+
+cache:
+  directories:
+  - "$HOME/Library/Caches/Homebrew"
+
+before_install:
+  - brew update
+  - brew cask install osxfuse
+  - brew tap onedata/onedata
+  - brew install --build-bottle --build-from-source oneclient
+  - brew bottle oneclient
+
+deploy:
+  provider: releases
+  api_key:
+    secure: R2STX+P3Pya0BAtCnLsSx/a1iQGa1TuaRQgKc+rUrNVoKdnXkjkN0pFfa4tGDigzlnC7h1IQ95M0IOsOFAqLxqznND2lzhLWgDzpxAlKakgu6w1OjMEL3gDxKIVDJP/BKzlZI3rOqLdzhjrmXqiumnZkyW+ZIACbeNFelTCMrHt66ZOVgwgtobU+8+VCQXpK1pr7WOg5GeIKL8rWMXXdaEIRVTcyqvd9BPefUdlm2AASWrR6k98gBcfE0ZL0OSzP48lgn51QioSGvvF6jYQweOlndBELG+rwCDLPmbe33ueo2sKI3deWeSIp4oT+gmJmwDHIY6PtxqRSyVtfykOoyjgCgjB/ADDcqWmmUx5iq8uflsSuuYSp4vU8FguGVerZEkitLRkAuO5pa1lzp47THP4RrZk6aJrG/RWksOmo0eZuOo0pxdOvtaeEuF4byS6a4dJ2D3+yerSqbM8JA4m5XCu5CFHGitk0mzAQv7uQJPy6q/Z70bpSAl98I1Rv/7GM1CBruLaw8yDFx1v0LuQy65EtoFh8zGtpI+JpPus37SwiNgxBy6knAyLwXmrMB672jpnB7zkeMikP/Rdj8Lpy/hwd1I+7WoO0qcVIqa+UtGdG+qUMSkHjEcqGpPShwKVvzvIX1Lw3DNQrOtduRyRWHTwAa+WzAzQA+ktgw1QDUT0=
+  file: oneclient-${TRAVIS_TAG}.${OSX_CODENAME}.bottle.tar.gz
+  skip_cleanup: true
+  on:
+    tags: true

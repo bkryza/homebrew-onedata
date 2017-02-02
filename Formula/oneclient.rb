@@ -1,14 +1,14 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "217d0cbb213b5aee4f1c8723d74c7395da8caaa4"
-  version "3.0.0-rc11-76-g217d0cb"
+  url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "8a770a72c3594536ea3b76c0104c70770c7c9396"
+  version "3.0.0-rc11-78-g8a770a72"
   head "https://github.com/onedata/oneclient.git", :branch => "develop"
 
   bottle do
     root_url "https://packages.onedata.org/homebrew"
     cellar :any
-    sha256 "5fb23345fb5dd06061970c0e5a7de0094d17f340e09632c7b00de5bdcb50d4e9" => :sierra
+    sha256 "efbe16aa2003441a4e8cdb79e037c292a3ddc0a65328210c2216cbfb72982148" => :sierra
   end
 
   depends_on :macos => :sierra
@@ -63,7 +63,7 @@ class Oneclient < Formula
       fuse_mount_opt noappledouble
       fuse_mount_opt noapplexattr
     EOS
-    inreplace "config/oneclient.conf", "# fuse_mount_opt", fuse_mount_options
+    inreplace "config/oneclient.conf", "# fuse_mount_opt =", fuse_mount_options
 
     # Install all files into the default Cellar
     bin.install "release/oneclient"
@@ -79,7 +79,17 @@ class Oneclient < Formula
   def caveats
     <<-EOS.undent
 
-      This is an experimental version of Onedata `oneclient` command line tool for macOS.
+      This is an experimental version of Onedata `oneclient` command line tool
+      for macOS.
+
+      To mount your spaces on macOS add the following options to the `oneclient`
+      command line:
+
+        oneclient -o allow_other,defer_permissions,noappledouble,noapplexattr ...
+
+      Additionally you can set the volume name (as displayed on desktop icon):
+
+        -o volname=MyProvider
 
       For more information on `oneclient` usage check:
 
