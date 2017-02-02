@@ -6,7 +6,7 @@ class Oneclient < Formula
   head "https://github.com/onedata/oneclient.git", :branch => "develop"
 
   bottle do
-    root_url "https://packages.onedata.org/homebrew"
+    root_url "https://github.com/onedata/oneclient/archive"
     cellar :any
     sha256 "efbe16aa2003441a4e8cdb79e037c292a3ddc0a65328210c2216cbfb72982148" => :sierra
   end

@@ -1,6 +1,6 @@
 branches:
   only:
-  - release/master
+  - release
 
 language: cpp
 
