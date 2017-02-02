@@ -6,9 +6,10 @@ class Oneclient < Formula
   head "https://github.com/onedata/oneclient.git", :branch => "develop"
 
   bottle do
-    root_url "https://github.com/onedata/oneclient/archive"
+    root_url "https://github.com/onedata/homebrew-onedata/releases/download/3.0.0-rc11-78-g8a770a72/"
     cellar :any
-    sha256 "efbe16aa2003441a4e8cdb79e037c292a3ddc0a65328210c2216cbfb72982148" => :sierra
+    rebuild 1
+    sha256 "c4151c34d59f4d8d29b12cad23322ed141bcf625e7e4e539661501e05d56c6f4" => :sierra
   end
 
   depends_on :macos => :sierra
@@ -55,13 +56,13 @@ class Oneclient < Formula
 
     # Set default Fuse options for macos
     fuse_mount_options = <<-EOS.undent
-      fuse_mount_opt allow_other
-      fuse_mount_opt defer_permissions
-      fuse_mount_opt fsname=oneclient
-      fuse_mount_opt volname=Oneclient
-      fuse_mount_opt kill_on_unmount
-      fuse_mount_opt noappledouble
-      fuse_mount_opt noapplexattr
+      fuse_mount_opt = allow_other
+      fuse_mount_opt = defer_permissions
+      fuse_mount_opt = fsname=oneclient
+      fuse_mount_opt = volname=Oneclient
+      fuse_mount_opt = kill_on_unmount
+      fuse_mount_opt = noappledouble
+      fuse_mount_opt = noapplexattr
     EOS
     inreplace "config/oneclient.conf", "# fuse_mount_opt =", fuse_mount_options
 
