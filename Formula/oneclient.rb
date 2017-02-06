@@ -1,15 +1,15 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "8a770a72c3594536ea3b76c0104c70770c7c9396"
-  version "3.0.0-rc11-78-g8a770a72"
+  url "https://github.com/onedata/oneclient.git", :branch => "release/3.0.0-rc12"
+  version "3.0.0-rc12"
   head "https://github.com/onedata/oneclient.git", :branch => "develop"
 
   bottle do
-    root_url "https://github.com/onedata/homebrew-onedata/releases/download/3.0.0-rc11-78-g8a770a72/"
+    root_url "https://github.com/onedata/homebrew-onedata/releases/download/3.0.0-rc12"
     cellar :any
     rebuild 1
-    sha256 "c4151c34d59f4d8d29b12cad23322ed141bcf625e7e4e539661501e05d56c6f4" => :sierra
+    sha256 "5190a874201308ad270b90fece1e6cb2915cb42e10eb19593fbe0bfff3070d87" => :sierra
   end
 
   depends_on :macos => :sierra
