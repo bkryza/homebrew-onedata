@@ -8,7 +8,6 @@ class Oneclient < Formula
   bottle do
     root_url "https://github.com/onedata/homebrew-onedata/releases/download/3.0.0-rc12"
     cellar :any
-    rebuild 1
     sha256 "5190a874201308ad270b90fece1e6cb2915cb42e10eb19593fbe0bfff3070d87" => :sierra
   end
 
