@@ -30,8 +30,8 @@ class Oneclient < Formula
   depends_on "openssl"
   depends_on "libevent"
   depends_on "nspr"
-  depends_on "aws-sdk-cpp" => :optional
-  depends_on "onedata/onedata/swift-cpp-sdk" => :optional
+  depends_on "aws-sdk-cpp"
+  depends_on "onedata/onedata/swift-cpp-sdk"
   depends_on "onedata/onedata/libiberty"
 
   def install
@@ -43,8 +43,8 @@ class Oneclient < Formula
       release
       WITH_COVERAGE=OFF
       WITH_CEPH=OFF
-      WITH_S3=OFF
-      WITH_SWIFT=OFF
+      WITH_S3=ON
+      WITH_SWIFT=ON
       WITH_OPENSSL=ON
       OPENSSL_ROOT_DIR=/usr/local/opt/openssl
       OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
