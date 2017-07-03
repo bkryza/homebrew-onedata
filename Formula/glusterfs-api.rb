@@ -12,6 +12,11 @@ class GlusterfsApi < Formula
   depends_on "automake" => :build
   depends_on "libtool" => :build
 
+  bottle do
+    url "https://bintray.com/bkryza/onedata-cellar/download_file?file_path=glusterfs-api-3.11.1.sierra.bottle.tar.gz"
+    sha256 "33931b20638cdc350a31e517d3471699cd9fc3b7182486fd6bfacf6ed946f7e7" => :sierra
+  end
+
   patch do
     url "https://gist.githubusercontent.com/bkryza/3536da563b730df316a394a8b05d92cd/raw/4cfaaa367be78f800ed7de582bbdf3b7c8cfd5ff/glusterfs-3.11.0-event_dispatch_prfx.diff"
     sha256 "729c3444a1931c9df70652e9f5ad0c136afe0cbfc017e39b20335ea5536845ca"
