@@ -1,7 +1,6 @@
 class GlusterfsApi < Formula
   desc "Glusterfs API OSX port"
   homepage "http://gluster.org"
-  #url "https://github.com/gluster/glusterfs.git", :tag => "v3.11.1"
   url "https://github.com/gluster/glusterfs/archive/v3.11.1.tar.gz"
   sha256 "929da99014c6461dac268a43db4539b623909b67088ab16a640b631965cfcb16"
 
@@ -13,7 +12,7 @@ class GlusterfsApi < Formula
   depends_on "libtool" => :build
 
   bottle do
-    url "https://bintray.com/bkryza/onedata-cellar/download_file?file_path=glusterfs-api-3.11.1.sierra.bottle.tar.gz"
+    root_url "https://bintray.com/bkryza/onedata-cellar/download_file?file_path="
     sha256 "33931b20638cdc350a31e517d3471699cd9fc3b7182486fd6bfacf6ed946f7e7" => :sierra
   end
 
