@@ -13,8 +13,8 @@ class GlusterfsApi < Formula
 
   bottle do
     root_url "https://bintray.com/bkryza/onedata-cellar/download_file?file_path="
-    rebuild 1
-    sha256 "1c7e90e4ac7f3faa4e7a97ccb69559df24d925fefa25c1b541b626ed67a27fd8" => :sierra
+    rebuild 2
+    sha256 "7216b2866e6d61292f36b76ffa5deec06afd0fc8d9dcdbb4f5be3576fb7b2c35" => :sierra
   end
 
   patch do
@@ -43,7 +43,6 @@ class GlusterfsApi < Formula
     system "./configure", "--prefix=#{prefix}",
                           "--disable-fusermount",
                           "--disable-fuse-client",
-                          "--enable-valgrind",
                           "--enable-static",
                           "--libexecdir=#{bin}"
     system "make"
@@ -52,11 +51,9 @@ class GlusterfsApi < Formula
 
   test do
     (testpath/"test.c").write <<-EOS.undent
-#include <cstring>
 #include <errno.h>
 #include <glusterfs/api/glfs-handles.h>
 #include <glusterfs/api/glfs.h>
-#include <iostream>
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -68,13 +65,11 @@ int main(int argc, char *argv[])
     struct stat sb;
     int ret = -1;
 
-    glfs_t *fs = glfs_new(argv[1]);
+    glfs_t *fs = glfs_new("data");
 
     ret = glfs_set_volfile_server(fs, "tcp", "example.com", 24007);
 
     if (ret != 0) {
-        std::cout << "Failed to configure volume: (" << ret << ") "
-                  << strerror(errno) << "\n";
         return 1;
     }
 
