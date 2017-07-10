@@ -4,17 +4,18 @@ class GlusterfsApi < Formula
   url "https://github.com/gluster/glusterfs/archive/v3.11.1.tar.gz"
   sha256 "929da99014c6461dac268a43db4539b623909b67088ab16a640b631965cfcb16"
 
-  depends_on "e2fsprogs"
+  conflicts_with "e2fsprogs", :because => "e2fsprogs provides incompatible uuid library"
   depends_on "openssl"
   depends_on "userspace-rcu"
   depends_on "autoconf" => :build
   depends_on "automake" => :build
   depends_on "libtool" => :build
 
-#  bottle do
-#    root_url "https://bintray.com/bkryza/onedata-cellar/download_file?file_path="
-#    sha256 "33931b20638cdc350a31e517d3471699cd9fc3b7182486fd6bfacf6ed946f7e7" => :sierra
-#  end
+  bottle do
+    root_url "https://bintray.com/bkryza/onedata-cellar/download_file?file_path="
+    rebuild 1
+    sha256 "1c7e90e4ac7f3faa4e7a97ccb69559df24d925fefa25c1b541b626ed67a27fd8" => :sierra
+  end
 
   patch do
     url "https://gist.githubusercontent.com/bkryza/3536da563b730df316a394a8b05d92cd/raw/4cfaaa367be78f800ed7de582bbdf3b7c8cfd5ff/glusterfs-3.11.0-event_dispatch_prfx.diff"
@@ -31,14 +32,56 @@ class GlusterfsApi < Formula
     sha256 "c51c19207dbdfdd4645d9a5009883eb7f43d53ee5bb852572e6c246d9cbfe964"
   end
 
+  patch do
+    url "https://gist.githubusercontent.com/bkryza/7bd46e2f33985b1b5dd27652025f9852/raw/12b352dcb4a0c045e234a2ea8da6c510fe32efaa/glusterfs-3.11.0-updated-locking.diff"
+    sha256 "f61b33d7d4f6dfbd125f5c2943083615d5738bcdbecf84c97e1fa444f73534ae"
+  end
+
   def install
     ENV["CFLAGS"]="-DLOGIN_NAME_MAX -O3 -DRELAX_POISONING -DGF_XATTR_NAME_MAX=255 -DGF_DARWIN_HOST_OS"
     system "./autogen.sh"
     system "./configure", "--prefix=#{prefix}",
                           "--disable-fusermount",
                           "--disable-fuse-client",
+                          "--enable-valgrind",
+                          "--enable-static",
                           "--libexecdir=#{bin}"
     system "make"
     system "make", "install"
+  end
+
+  test do
+    (testpath/"test.c").write <<-EOS.undent
+#include <cstring>
+#include <errno.h>
+#include <glusterfs/api/glfs-handles.h>
+#include <glusterfs/api/glfs.h>
+#include <iostream>
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+int main(int argc, char *argv[])
+{
+    struct stat sb;
+    int ret = -1;
+
+    glfs_t *fs = glfs_new(argv[1]);
+
+    ret = glfs_set_volfile_server(fs, "tcp", "example.com", 24007);
+
+    if (ret != 0) {
+        std::cout << "Failed to configure volume: (" << ret << ") "
+                  << strerror(errno) << "\n";
+        return 1;
+    }
+
+    return 0;
+}
+    EOS
+    system ENV.cc, "test.cpp", "-L#{lib}", "-lgfapi", "-lglusterfs", "-lgfrpc", "-lgfxdr", "-o", "test"
+    system "./test"
   end
 end
