@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     return 0;
 }
     EOS
-    system ENV.cc, "test.cpp", "-L#{lib}", "-lgfapi", "-lglusterfs", "-lgfrpc", "-lgfxdr", "-o", "test"
+    system ENV.cc, "test.c", "-L#{lib}", "-lgfapi", "-lglusterfs", "-lgfrpc", "-lgfxdr", "-o", "test"
     system "./test"
   end
 end
