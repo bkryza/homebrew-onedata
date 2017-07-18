@@ -1,8 +1,8 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  url "https://github.com/onedata/oneclient.git", :branch => "release/17.06.0-beta2"
-  version "17.06.0-beta2"
+  url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "de91282946e59a3d4fcf65abacd944eee6826c5e"
+  version "17.06.0-beta6-15-gde9128294"
   head "https://github.com/onedata/oneclient.git", :branch => "develop"
 
   depends_on :macos => :sierra
@@ -11,7 +11,7 @@ class Oneclient < Formula
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "boost"
-  depends_on "boost-python" => [:build, "with-python3"]
+  depends_on "boost-python" => :build
   depends_on "go" => :build
   depends_on "libsodium"
   depends_on "protobuf"
@@ -31,7 +31,7 @@ class Oneclient < Formula
 
   def install
     # Setup environment variables for the build
-    ENV["PKG_CONFIG_PATH"]="#{HOMEBREW_PREFIX}/opt/nss/lib/pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", "#{HOMEBREW_PREFIX}/opt/nss/lib/pkgconfig"
 
     # Setup make arguments
     args = %w[
@@ -78,7 +78,7 @@ class Oneclient < Formula
       for macOS.
 
       To mount your spaces on macOS add the following options to the `oneclient`
-      command line:
+      command line or set them in the `/usr/local/etc/oneclient.conf` file:
 
         oneclient -o allow_other,defer_permissions,noappledouble,noapplexattr ...
 
