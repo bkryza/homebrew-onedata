@@ -1,15 +1,9 @@
 class Oneclient < Formula
   desc "Installs Oneclient, the Command Line tool for Onedata platform"
   homepage "https://onedata.org"
-  url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "8a770a72c3594536ea3b76c0104c70770c7c9396"
-  version "3.0.0-rc11-78-g8a770a72"
+  url "https://github.com/onedata/oneclient.git", :branch => "develop", :revision => "de91282946e59a3d4fcf65abacd944eee6826c5e"
+  version "17.06.0-beta6-15-gde9128294"
   head "https://github.com/onedata/oneclient.git", :branch => "develop"
-
-  bottle do
-    root_url "https://github.com/onedata/oneclient/archive"
-    cellar :any
-    sha256 "" => :sierra
-  end
 
   depends_on :macos => :sierra
 
@@ -17,7 +11,7 @@ class Oneclient < Formula
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "boost"
-  depends_on "boost-python" => [:build, "with-python3"]
+  depends_on "boost-python" => :build
   depends_on "go" => :build
   depends_on "libsodium"
   depends_on "protobuf"
@@ -30,22 +24,23 @@ class Oneclient < Formula
   depends_on "openssl"
   depends_on "libevent"
   depends_on "nspr"
-  depends_on "aws-sdk-cpp" => :optional
-  depends_on "onedata/onedata/swift-cpp-sdk" => :optional
+  depends_on "aws-sdk-cpp"
+  depends_on "onedata/onedata/swift-cpp-sdk"
   depends_on "onedata/onedata/libiberty"
+  depends_on "onedata/onedata/glusterfs-api"
 
   def install
     # Setup environment variables for the build
-    ENV["PKG_CONFIG_PATH"]="#{HOMEBREW_PREFIX}/opt/nss/lib/pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", "#{HOMEBREW_PREFIX}/opt/nss/lib/pkgconfig"
 
     # Setup make arguments
     args = %w[
       release
       WITH_COVERAGE=OFF
       WITH_CEPH=OFF
-      WITH_S3=OFF
-      WITH_SWIFT=OFF
-      WITH_OPENSSL=ON
+      WITH_S3=ON
+      WITH_SWIFT=ON
+      WITH_GLUSTERFS=ON
       OPENSSL_ROOT_DIR=/usr/local/opt/openssl
       OPENSSL_LIBRARIES=/usr/local/opt/openssl/lib
     ]
@@ -55,13 +50,13 @@ class Oneclient < Formula
 
     # Set default Fuse options for macos
     fuse_mount_options = <<-EOS.undent
-      fuse_mount_opt allow_other
-      fuse_mount_opt defer_permissions
-      fuse_mount_opt fsname=oneclient
-      fuse_mount_opt volname=Oneclient
-      fuse_mount_opt kill_on_unmount
-      fuse_mount_opt noappledouble
-      fuse_mount_opt noapplexattr
+      fuse_mount_opt = allow_other
+      fuse_mount_opt = defer_permissions
+      fuse_mount_opt = fsname=oneclient
+      fuse_mount_opt = volname=Oneclient
+      fuse_mount_opt = kill_on_unmount
+      fuse_mount_opt = noappledouble
+      fuse_mount_opt = noapplexattr
     EOS
     inreplace "config/oneclient.conf", "# fuse_mount_opt =", fuse_mount_options
 
@@ -83,7 +78,7 @@ class Oneclient < Formula
       for macOS.
 
       To mount your spaces on macOS add the following options to the `oneclient`
-      command line:
+      command line or set them in the `/usr/local/etc/oneclient.conf` file:
 
         oneclient -o allow_other,defer_permissions,noappledouble,noapplexattr ...
 
